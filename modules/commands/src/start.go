@@ -13,7 +13,7 @@ func StartCommand(msg *tgbotapi.MessageConfig, opts ...any) {
 	var bot = setup.BOT
 	opt := options.GetOpt(opts...)
 
-	str := fmt.Sprintf("Hi %s\nWelcome to NextJob Seeker. Find the best job and apply.", opt.Name)
+	str := fmt.Sprintf(`Hi %s!\nWelcome to "NEXT JOB". Find the best job and start to apply.`, opt.Name)
 	msg.Text = str
 	if _, err := bot.Send(msg); err != nil {
 		log.Println(err.Error())
