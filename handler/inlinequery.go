@@ -56,7 +56,18 @@ func HandleInlieQuery(inline *tgbotapi.InlineQuery) error {
 		contentURL := fmt.Sprintf("https://www.showwcase.com/job/%d-%s", int(id), slug)
 		article := tgbotapi.NewInlineQueryResultArticle(artID, title, contentURL)
 		article.Description = desc
-		article.ThumbURL = company["logo"].(string)
+		if logo, ok := company["logo"].(string); ok {
+			article.ThumbURL = logo
+		}
+		if applyURL, ok := val["applyUrl"].(string); ok {
+			keyboard := tgbotapi.NewInlineKeyboardMarkup(
+				tgbotapi.NewInlineKeyboardRow(
+					tgbotapi.NewInlineKeyboardButtonURL("APPLY", applyURL),
+				),
+			)
+			article.ReplyMarkup = &keyboard
+		}
+
 		articles = append(articles, article)
 	}
 
