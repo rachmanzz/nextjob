@@ -14,6 +14,9 @@ func HandleCommand(botMsg *tgbotapi.Message) {
 			var name string = botMsg.Chat.UserName
 			if botMsg.Chat.FirstName != "" {
 				name = botMsg.Chat.FirstName
+				if botMsg.Chat.LastName != "" {
+					name += " " + botMsg.Chat.LastName
+				}
 			}
 
 			bot.Request(tgbotapi.DeleteMessageConfig{
