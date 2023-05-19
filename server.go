@@ -16,8 +16,6 @@ func main() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	bot.Debug = true
-
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 	updates := bot.GetUpdatesChan(u)
@@ -48,7 +46,7 @@ func main() {
 	// 	),
 	// )
 
-	debounced := debounce.New(1000 * time.Millisecond)
+	debounced := debounce.New(2000 * time.Millisecond)
 
 	for update := range updates {
 		if update.Message != nil { // If we got a message
