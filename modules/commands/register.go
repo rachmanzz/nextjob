@@ -19,8 +19,8 @@ func init() {
 			CommandAction: src.StartCommand,
 		},
 		{
-			CommandName:   "search",
-			CommandAction: src.SearchCommand,
+			CommandName:   "how",
+			CommandAction: src.HowCommand,
 		},
 	}
 }
