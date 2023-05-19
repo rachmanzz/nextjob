@@ -1,9 +1,6 @@
 package setup
 
 import (
-	"log"
-	"os"
-
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/joho/godotenv"
 )
@@ -11,18 +8,21 @@ import (
 var BOT *tgbotapi.BotAPI
 
 func init() {
-	if os.Getenv("LOCAL_ENV") == "yes" {
-		err := godotenv.Load("local.env")
-		if err != nil {
-			panic(err)
-		}
-	} else {
-		log.Println("no local env")
+	godotenv.Load("local.env")
+
+	err := PopulateVarArg()
+
+	if err != nil {
+		panic(err.Error())
 	}
 
-	bot, err := tgbotapi.NewBotAPI(os.Getenv("SECRET"))
+	bot, err := tgbotapi.NewBotAPI(*VarArgData.BotAPI)
 	if err != nil {
 		panic(err)
+	}
+
+	if !VarArgData.Production {
+		bot.Debug = true
 	}
 
 	BOT = bot
