@@ -7,15 +7,18 @@ import (
 
 func QueryParse(q string) (*[]string, *[]map[string]string) {
 	regex := regexp.MustCompile(`(--[a-zA-Z\-]+)=([^=]*\w)(?:\s|$)`)
-	var positions []string
+	var positions []string = []string{}
 	var params []map[string]string
 
 	argsGroup := regex.FindAllString(q, -1)
 	indexGroup := regex.FindAllStringIndex(q, -1)
 	if len(indexGroup) >= 1 {
-		positionStr := q[0:(indexGroup[0][0])]
-		positionArr := strings.Split(positionStr, ";")
-		positions = append(positions, positionArr...)
+		argStart := indexGroup[0][0]
+		if argStart >= 1 {
+			positionStr := q[0:argStart]
+			positionArr := strings.Split(positionStr, ";")
+			positions = append(positions, positionArr...)
+		}
 	} else {
 		positions = append(positions, q)
 	}
