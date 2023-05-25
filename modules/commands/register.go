@@ -22,5 +22,9 @@ func init() {
 			CommandName:   "how",
 			CommandAction: src.HowCommand,
 		},
+		{
+			CommandName:   "filter",
+			CommandAction: src.FilterCommand,
+		},
 	}
 }
