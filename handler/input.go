@@ -2,11 +2,10 @@ package handler
 
 import (
 	"context"
-	"log"
-
-	"strconv"
+	"fmt"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/rachmanzz/nextjob/modules/input"
 	"github.com/rachmanzz/nextjob/setup"
 	"github.com/rachmanzz/nextjob/types"
 )
@@ -14,22 +13,19 @@ import (
 var ctx = context.Background()
 
 func HandleInput(botMsg *tgbotapi.Message) {
-	var bot = setup.BOT
 	var redis = setup.REDIS
-	msg := tgbotapi.NewMessage(botMsg.Chat.ID, "")
-	if botMsg.Text != "" {
-		if val, err := redis.Get(ctx, "typing_"+strconv.Itoa(int(botMsg.Chat.ID))).Result(); err == nil {
-			commandSearch := types.InputMessageObject{}
-			if commandSearch.ToObject(val); err != nil {
-				log.Panic(err)
-			}
-			if *commandSearch.Command == "search" {
-				msg.Text = "in search"
-			}
 
-			if _, err := bot.Send(msg); err != nil {
-				log.Panic(err)
+	keyID := fmt.Sprintf("typing_%d", botMsg.Chat.ID)
+	if val, err := redis.Get(ctx, keyID).Result(); err == nil && botMsg.Text != "" {
+		inputData := types.InputMessageObject{}
+		if err := inputData.ToObject(val); err == nil {
+			for _, v := range input.RegisteredInputCommand {
+				if v.CommandName == *inputData.Command {
+					v.CommandAction(*inputData.RefData, botMsg)
+					redis.Del(ctx, keyID)
+				}
 			}
 		}
+
 	}
 }
