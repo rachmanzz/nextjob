@@ -5,21 +5,21 @@ import (
 )
 
 type InputMessageObject struct {
-	ChatID          int64   `json:"chat_id"`
-	MessageID       int     `json:"message_id"`
-	ChannelUsername string  `json:"channel_username"`
-	Command         *string `json:"command"`
+	ChatID    int64   `json:"chat_id"`
+	MessageID int     `json:"message_id"`
+	Command   *string `json:"command"`
+	RefData   *string `json:"ref_data"`
 }
 
-func (input InputMessageObject) ToJSON() *string {
+func (input InputMessageObject) ToJSON() (string, error) {
 	var jData, err = json.Marshal(input)
 	if err != nil {
-		return nil
+		return "", err
 	}
 
 	jsonStr := string(jData)
 
-	return &jsonStr
+	return jsonStr, nil
 }
 
 func (input *InputMessageObject) ToObject(val string) error {
