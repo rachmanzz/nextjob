@@ -26,5 +26,9 @@ func init() {
 			CommandName:   "filter",
 			CommandAction: src.FilterCommand,
 		},
+		{
+			CommandName:   "help",
+			CommandAction: src.HelpCommand,
+		},
 	}
 }

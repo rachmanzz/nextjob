@@ -24,34 +24,54 @@ func SendArticles(queryID string, data []map[string]interface{}) error {
 		articleID := fmt.Sprintf("id-%d", int(itemID))
 		contentURL := fmt.Sprintf("https://www.showwcase.com/job/%d-%s", int(itemID), slug)
 
-		content := title + "\n"
+		content := "<b><u>" + title + "</u></b>\n"
 
 		if itemType, ok := item["type"].(string); ok && itemType != "" {
-			content += "type : " + itemType + "\n"
+			content += "<b>type</b> " + itemType + "\n"
 		}
 		if itemArrangement, ok := item["arrangement"].(string); ok && itemArrangement != "" {
-			content += "arrangement : " + itemArrangement + "\n"
+			content += "<b>arrangement</b> " + itemArrangement + "\n"
 		}
 
 		if itemExperience, ok := item["experience"].(string); ok && itemExperience != "" {
-			content += "experience : " + itemExperience + "\n"
+			content += "<b>experience</b> " + itemExperience + "\n"
+		}
+		if salaryItem, ok := item["salary"].(map[string]interface{}); ok {
+			if salary, ok := salaryItem["range"].(string); ok && salary != "" {
+				content += fmt.Sprintf("<b>salary</b> %s\n", salary)
+			}
 		}
 
-		salaryFrom := item["salaryFrom"].(float64)
-		salaryTo := item["salaryTo"].(float64)
-		content += fmt.Sprintf("salary : %.f-%.f\n", salaryFrom, salaryTo)
-
 		if itemCurrency, ok := item["currency"].(string); ok && itemCurrency != "" {
-			content += "currency : " + itemCurrency + "\n"
+			content += "<b>currency</b> " + itemCurrency + "\n"
 		}
 
 		if itemLocation, ok := item["location"].(string); ok && itemLocation != "" {
-			content += "location : " + itemLocation + "\n"
+			content += "<b>location</b> " + itemLocation + "\n"
 		}
 
-		fullContent := fmt.Sprintf("%s \n%s", contentURL, content)
+		if stacks, ok := item["stacks"].([]interface{}); ok {
+			stacklist := ""
+			for _, stackItem := range stacks {
+				if stackData, ok := stackItem.(map[string]interface{}); ok {
+					if stackName, ok := stackData["name"].(string); ok {
+						if stacklist != "" {
+							stacklist += ", " + stackName
+						} else {
+							stacklist = stackName
+						}
+					}
+				}
+			}
 
-		article := tgbotapi.NewInlineQueryResultArticle(articleID, title, fullContent)
+			if stacklist != "" {
+				content += "\n<u>Tech Stack:</u>\n" + stacklist + "\n\n"
+			}
+		}
+
+		fullContent := fmt.Sprintf("%s \n%s", content, contentURL)
+
+		article := tgbotapi.NewInlineQueryResultArticleHTML(articleID, title, fullContent)
 		article.Description = desc
 
 		if company, ok := item["company"].(map[string]interface{}); ok {
