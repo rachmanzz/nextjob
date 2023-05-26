@@ -20,7 +20,8 @@ func QueryParse(q string) (*[]string, *[]map[string]string) {
 			positions = append(positions, positionArr...)
 		}
 	} else {
-		positions = append(positions, q)
+		positionArr := strings.Split(q, ";")
+		positions = append(positions, positionArr...)
 	}
 
 	if len(argsGroup) >= 1 {
