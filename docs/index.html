@@ -1,13 +1,69 @@
 <!doctype html>
 <html>
 <head>
+  <title>NEXTJOB BOT</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+<body class="bg-gray-50">
+  <div class="max-w-2xl m-auto bg-white">
+    <div>
+      <picture>
+        <img src="./res/img/banner.svg" alt="banner" class="w-full" />
+      </picture>
+    </div>
+    <div class="flex mt-3 flex-col gap-2 px-4">
+      <div>
+        <h2 class="text-2xl font-semibold border-b border-b-gray-100">START</h2>
+        <p>Open the "NextJob" bot is optional, you can use it anywhere, with friends, family or in group chats. If you Open the "NextJob" bot, you will find another option like filter menu and guide. </p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-semibold border-b border-b-gray-100">USAGE</h2>
+        <p>Open any chat, and type <pre>@nextjobot [space] position (job you looking for)</pre></p>
+        <h3>example:</h3>
+        <code>@nextjobot backend</code>
+      </div>
+      <div>
+        <h2 class="text-2xl font-semibold border-b border-b-gray-100">INLINE FILTER</h2>
+        <p>To add filter we need extra argument to filter result.</p>
+        <h3>optional filter</h3>
+        <ol class="list-[square] pl-5">
+          <li class="font-semibold">
+            loc
+            <p class="font-normal">loc represents location. multi location is able. to add multi location, split location value by semicolon (;)</p>
+          </li>
+          <li class="font-semibold">
+            salary
+            <p class="font-normal">salary format [start_salary] - [stop_salary] for example 200-800</p>
+          </li>
+          <li class="font-semibold">
+            currency
+            <p class="font-normal">currency code </p>
+          </li>
+          <li class="font-semibold">
+            type
+            <p class="font-normal">type of job as full-time, part-time, contract, etc</p>
+          </li>
+        </ol>
+        <h3>example:</h3>
+        <code>@nextjobot backend --loc=indonesia --currency=usd</code>
+
+        <picture>
+          <img class="border border-gray-100 md:w-1/2" src="./res/img/withlocation.png" alt="filter location"/>
+        </picture>
+      </div>
+      <div>
+        <h2 class="text-2xl font-semibold border-b border-b-gray-100">MULTI POSITION</h2>
+        <p>this bot able search multi position by split with semicolon (;)</p>
+        <h3>example:</h3>
+        <code>@nextjobot backend; frontend</code>
+      </div>
+      <div>
+        <h2 class="text-2xl font-semibold border-b border-b-gray-100">SETUP FILTER</h2>
+        <p>open the "NEXTJOB" bot chat, and type /filter or open menu and select filter. if you have filter set, you not need to use inline filter. filter will saved 8 hours.</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
