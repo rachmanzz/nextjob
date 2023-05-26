@@ -18,6 +18,9 @@ var FilterKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 		tgbotapi.NewInlineKeyboardButtonData("inline arg", "--filter-inline-arg"),
 		tgbotapi.NewInlineKeyboardButtonData("clear", "--filter-clear"),
 	),
+	tgbotapi.NewInlineKeyboardRow(
+		tgbotapi.NewInlineKeyboardButtonData("data", "--filter-data"),
+	),
 )
 
 func FilterCommand(msg *tgbotapi.MessageConfig, opts ...any) {
