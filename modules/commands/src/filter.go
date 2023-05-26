@@ -7,7 +7,7 @@ import (
 	"github.com/rachmanzz/nextjob/setup"
 )
 
-var filterKeyboard = tgbotapi.NewInlineKeyboardMarkup(
+var FilterKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 	tgbotapi.NewInlineKeyboardRow(
 		tgbotapi.NewInlineKeyboardButtonData("location", "--filter-location"),
 		tgbotapi.NewInlineKeyboardButtonData("type", "--filter-type"),
@@ -16,6 +16,7 @@ var filterKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 	tgbotapi.NewInlineKeyboardRow(
 		tgbotapi.NewInlineKeyboardButtonData("salary", "--filter-salary"),
 		tgbotapi.NewInlineKeyboardButtonData("inline arg", "--filter-inline-arg"),
+		tgbotapi.NewInlineKeyboardButtonData("clear", "--filter-clear"),
 	),
 )
 
@@ -23,7 +24,7 @@ func FilterCommand(msg *tgbotapi.MessageConfig, opts ...any) {
 	var bot = setup.BOT
 
 	msg.Text = "please select the filter button below"
-	msg.ReplyMarkup = filterKeyboard
+	msg.ReplyMarkup = FilterKeyboard
 
 	if _, err := bot.Send(msg); err != nil {
 		log.Println(err.Error())
