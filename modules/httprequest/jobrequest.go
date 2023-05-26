@@ -15,7 +15,9 @@ func JobRequest(positions []string, params []map[string]string) (*http.Response,
 		return nil, err
 	}
 
-	request.Header.Set("x-api-key", *setup.VarArgData.ShowCaseAPI)
+	if setup.VarArgData.ShowCaseAPI != nil {
+		request.Header.Set("x-api-key", *setup.VarArgData.ShowCaseAPI)
+	}
 
 	q := request.URL.Query()
 	for _, position := range positions {
