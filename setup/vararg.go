@@ -34,10 +34,10 @@ func PopulateVarArg() error {
 
 	showCaseApi := os.Getenv("SHOWCASE_API")
 
-	if showCaseApi == "" {
-		return errors.New("showcase api is ampty")
+	if showCaseApi != "" {
+		// empty is OK
+		vararg.ShowCaseAPI = &showCaseApi
 	}
-	vararg.ShowCaseAPI = &showCaseApi
 
 	redisHost := os.Getenv("REDIS_HOST")
 
