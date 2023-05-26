@@ -23,8 +23,10 @@ var filterKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 )
 
 func FilterReferance(ref string, botMsg *tgbotapi.Message) {
+	var bot = setup.BOT
 	var redis = setup.REDIS
-	keyID := fmt.Sprintf("filter_%d", botMsg.Chat.ID)
+	msgConfig := tgbotapi.NewMessage(botMsg.Chat.ID, "")
+	keyID := fmt.Sprintf("filter_%d", botMsg.From.ID)
 	inputfilter := types.FilterRefObject{}
 	hasChange := false
 	if val, err := redis.Get(ctx, keyID).Result(); err == nil {
@@ -56,6 +58,17 @@ func FilterReferance(ref string, botMsg *tgbotapi.Message) {
 
 	if ref == "inline-arg" {
 		_, params := textparse.QueryParse(botMsg.Text)
+		if len(*params) == 0 {
+			msgConfig.Text = "invalid argument..."
+			msgConfig.ReplyMarkup = filterKeyboard
+
+			if _, err := bot.Send(msgConfig); err != nil {
+				log.Println(err.Error())
+			}
+		} else {
+			hasChange = true
+		}
+
 		for _, items := range *params {
 			for key, item := range items {
 				if key == "location[]" {
@@ -83,8 +96,6 @@ func FilterReferance(ref string, botMsg *tgbotapi.Message) {
 		if err != nil {
 			log.Println(err.Error())
 		} else {
-			var bot = setup.BOT
-			msgConfig := tgbotapi.NewMessage(botMsg.Chat.ID, "")
 			msgConfig.Text = "set next filter or close ?"
 			msgConfig.ReplyMarkup = filterKeyboard
 
