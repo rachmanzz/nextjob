@@ -35,6 +35,18 @@ func init() {
 			Query:          "--filter-inline-arg",
 			CallbackAction: filter.FilterInlineArgument,
 		},
+		{
+			Query:          "--filter-clear",
+			CallbackAction: filter.FilterClear,
+		},
+		{
+			Query:          "--filter-open",
+			CallbackAction: filter.FilterOpen,
+		},
+		{
+			Query:          "--filter-close",
+			CallbackAction: filter.FilterBtnFinish,
+		},
 		// end filter query
 	}
 }
