@@ -47,6 +47,10 @@ func init() {
 			Query:          "--filter-close",
 			CallbackAction: filter.FilterBtnFinish,
 		},
+		{
+			Query:          "--filter-data",
+			CallbackAction: filter.FilterData,
+		},
 		// end filter query
 	}
 }
