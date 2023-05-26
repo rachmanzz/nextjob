@@ -37,13 +37,13 @@ func FilterCurrency(msg tgbotapi.Message) {
 	keyID := fmt.Sprintf("typing_%d", input.ChatID)
 
 	if val, err := input.ToJSON(); err == nil {
-		err := redis.Set(ctx, keyID, val, 15*time.Second).Err()
+		err := redis.Set(ctx, keyID, val, 30*time.Second).Err()
 		if err != nil {
 			log.Println(err.Error())
 		}
 
 		go func() {
-			time.Sleep(time.Second * 12)
+			time.Sleep(time.Second * 25)
 			if _, err := redis.Get(ctx, keyID).Result(); err == nil {
 				bot.Request(tgbotapi.DeleteMessageConfig{
 					MessageID: nextMess.MessageID,
